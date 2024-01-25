@@ -1,32 +1,12 @@
+import React from 'react';
+import { Form, Formik, FormikProps } from 'formik';
 import { InputFormik, Button } from '@/components';
 import Card from '@/components/Card';
-import clientAxios from '@/config/axiosCreate';
-import { Form, Formik, FormikProps } from 'formik';
-import React, { useState } from 'react';
-
-interface Error {
-  msg: string;
-}
-interface Values {
-  name: string;
-  email: string;
-  password: string;
-  repeat_password: string;
-}
+import useSignupForm from '@/hooks/useSignup';
+import { AuthErrors } from '@/components/auth/AuthErrors';
 
 export default function Signup() {
-  const [errors, setErrors] = useState<Error[]>([]);
-  const handleSubmit = async (values: Values) => {
-    try {
-      const res = await clientAxios.post('/auth/signup', values);
-    } catch (error: any) {
-      if (error.response && error.response.data && error.response.data.errors) {
-        setErrors(error.response.data.errors);
-      } else {
-        console.error(error);
-      }
-    }
-  };
+  const { errors, handleSubmit } = useSignupForm(); // Usa el hook personalizado
 
   return (
     <div className='flex-center h-screen'>
@@ -35,18 +15,7 @@ export default function Signup() {
           <span className='font-bold'>Bienes</span> Raices
         </h1>
         <h3 className='text-2xl font-bold text-center mt-4'>Crear Cuenta</h3>
-        {errors && (
-          <div className='max-w-md mx-auto'>
-            {errors.map((error, index) => (
-              <div
-                className='rounded-md bg-red-400 text-center text-white font-semibold my-4 p-4'
-                key={index}
-              >
-                {error.msg}
-              </div>
-            ))}
-          </div>
-        )}
+        {errors && <AuthErrors errors={errors} />}
         <Card className='max-w-md mx-auto p-10 mt-8' color='white'>
           <Formik
             initialValues={{
@@ -55,11 +24,11 @@ export default function Signup() {
               password: '',
               repeat_password: '',
             }}
-            onSubmit={(values, actions) => {
+            onSubmit={(values) => {
               handleSubmit(values);
             }}
           >
-            {(props: FormikProps<Values>) => (
+            {() => (
               <Form className='w-full' noValidate>
                 <InputFormik name='name' label='Nombre(s)' type='text' />
                 <div className='mt-2'>
