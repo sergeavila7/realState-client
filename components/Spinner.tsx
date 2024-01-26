@@ -1,13 +1,14 @@
 import cn from 'classnames';
 /* eslint-disable-next-line */
 interface SpinnerProps {
-  size?: 'xs' | 'md' | 'lg';
+  size?: 'xs' | 'md' | 'lg' | 'xl';
 }
 export const Spinner = ({ size = 'md' }: SpinnerProps) => {
   const rootClassName = cn('animate-spin', {
     'h-2 w-2': size === 'xs',
     'h-5 w-5': size === 'md',
     'h-7 w-7': size === 'lg',
+    'h-10 w-10': size === 'xl',
   });
   return (
     <div className={`animate-spin ${rootClassName}`}>
