@@ -1,4 +1,3 @@
-// pages/api/confirm/[token].ts
 import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
 
@@ -7,7 +6,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const { token } = req.query; // Corregimos aquí
+    const { token } = req.query; 
 
     const response = await axios.get(`http://localhost:4000/auth/confirm/${token}`);
 

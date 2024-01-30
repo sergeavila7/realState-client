@@ -13,7 +13,7 @@ export const AuthErrors: FC<AuthErrorsProps> = ({ errors }) => {
     <div className='max-w-md mx-auto'>
       {errors.map((error, index) => (
         <div
-          className='rounded-md bg-red-400 text-center text-white font-semibold my-4 p-4'
+          className='rounded-md bg-red-400 text-center text-white font-semibold uppercase my-4 p-4'
           key={index}
         >
           {error.msg}
